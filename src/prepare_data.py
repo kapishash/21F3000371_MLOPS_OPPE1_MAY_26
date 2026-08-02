@@ -1,6 +1,8 @@
 import os
 import glob
 import pandas as pd
+import argparse
+from sklearn.model_selection import train_test_split
 
 
 def process_file(file_path):
@@ -47,10 +49,13 @@ def process_file(file_path):
     return df
 
 
-def build_dataset(input_folder, output_folder):
+def build_dataset(input_folders, output_folder):
     os.makedirs(output_folder, exist_ok=True)
 
-    files = glob.glob(os.path.join(input_folder, "*.csv"))
+    files = []
+
+    for folder in input_folders:
+        files.extend(glob.glob(os.path.join(folder, "*.csv")))
 
     dfs = []
 
@@ -61,8 +66,12 @@ def build_dataset(input_folder, output_folder):
 
     data = data.sort_values("timestamp")
 
-    train = data.iloc[:-20]
-    test = data.iloc[-20:]
+    train, test = train_test_split(
+        data,
+        test_size=0.2,
+        random_state=42,
+        stratify=data["target"]
+    )
 
     train.to_parquet(
     os.path.join(output_folder, "train.parquet"),
@@ -80,7 +89,37 @@ def build_dataset(input_folder, output_folder):
 
 if __name__ == "__main__":
 
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--version",
+        default="v0",
+        choices=["v0", "merged"]
+    )
+
+    args = parser.parse_args()
+
+
+    if args.version == "v0":
+
+        input_folders = [
+            "data/v0"
+        ]
+
+        output_folder = "feast_repo/data/v0"
+
+
+    elif args.version == "merged":
+
+        input_folders = [
+            "data/v0",
+            "data/v1"
+        ]
+
+        output_folder = "feast_repo/data/merged"
+
+
     build_dataset(
-        "data/v0",
-        "feast_repo/data"
+        input_folders,
+        output_folder
     )
