@@ -1,0 +1,11 @@
+project: stock_prediction
+
+provider: local
+
+registry: data/registry.db
+
+online_store:
+  type: sqlite
+  path: data/online_store.db
+
+entity_key_serialization_version: 3
