@@ -1,0 +1,64 @@
+name: MLOps CI with CML
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+
+  evaluate-model:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install dvc[gdrive]
+        pip install mlflow
+        pip install cml
+        pip install feast
+        pip install lightgbm
+
+
+    - name: Pull data using DVC
+      run: |
+        dvc pull
+
+
+    - name: Retrieve Feast features
+      run: |
+        python src/get_training_data.py
+
+
+    - name: Run model evaluation
+      run: |
+        python src/evaluate.py > report.txt
+
+
+    - name: Create CML report
+      env:
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "# Stock Movement Predictor Report" > report.md
+        echo "" >> report.md
+        echo "## Evaluation Results" >> report.md
+        cat report.txt >> report.md
+
+        cml comment create report.md
