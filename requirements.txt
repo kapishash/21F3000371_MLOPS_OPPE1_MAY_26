@@ -1,0 +1,9 @@
+pandas
+pyarrow
+scikit-learn
+lightgbm
+mlflow
+joblib
+dvc
+dvc[gdrive]
+feast==0.65.0
