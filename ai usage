@@ -1,0 +1,60 @@
+# AI Usage Declaration
+
+## Project: Stock Movement Predictor - MLOps OPPE-1
+
+This document describes the usage of AI assistance during the development of this project.
+
+## AI Tools Used
+
+- ChatGPT (OpenAI)
+
+## Purpose of AI Assistance
+
+AI assistance was used as a support tool during development for:
+
+
+2. Debugging Python errors and configuration issues.
+3. Reviewing and improving project scripts.
+5. Getting guidance on Git, GitHub Actions, and GCP configuration.
+6. Improving code structure, documentation, and troubleshooting workflow issues.
+
+## Areas Where AI Assistance Was Used
+
+### Data Pipeline
+- Debugging dataset preparation scripts.
+- Validating train/test split implementation.
+- Improving feature preparation logic.
+
+### Feast Feature Store
+- Debugging point-in-time feature retrieval.
+- Validating historical feature extraction workflow.
+
+### Model Training
+- Debugging ML training scripts.
+- Improving model training workflow.
+- Adding MLflow experiment tracking.
+
+### MLflow
+- Configuring MLflow tracking URI.
+- Logging parameters, metrics, and models.
+- Registering trained models in MLflow Model Registry.
+- Debugging model logging issues.
+
+### CI/CD and CML
+- Creating GitHub Actions workflow.
+- Understanding automated evaluation pipeline.
+- Debugging dependency installation and workflow errors.
+
+### GCP Configuration
+- Understanding IAM permission setup.
+- Configuring access permissions required for evaluation.
+
+## Human Contribution
+
+All implementation decisions, project setup, execution, testing, and final integration were performed by me.
+
+AI assistance was used only for guidance, debugging support, and improving understanding of technical concepts. The final code execution, validation, and submission preparation were completed independently.
+
+## Declaration
+
+I acknowledge the use of AI tools as an assistive resource during this project and have reviewed and understood all generated suggestions before implementation.
